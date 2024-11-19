@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        .star {
+            color: red;
+        }
+    </style>
+    <script>
+        function show() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (name === "" || password === "" || email === "") {
+                document.getElementById("p1").innerHTML = "*Enter Mandatory Fields";
+                document.getElementById("p1").style.color = "red";
+                return false;
+            } else if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+                document.getElementById("p1").innerHTML = "*Password must be strong";
+                document.getElementById("p1").style.color = "red";
+                return false;
+            } else if (!validateEmail(document.getElementById("email").value)) {
+                document.getElementById("p1").innerHTML = "*Invalid email address";
+                document.getElementById("p1").style.color = "red";
+                return false;
+            }
+            return true;
+        }
+
+        function disppwd() {
+            document.getElementById("pwd").innerHTML = "Password must be strong (at least 8 characters, with uppercase, lowercase, numbers, and special characters)";
+        }
+
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+            return re.test(email);
+        }
+
+        function fun1(event) {
+            var ch = event.which;
+            if (!((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == 32) || (ch == 8) || (ch == 0))) {
+                event.preventDefault();
+            }
+        }
+    </script>
+    <title>Registration Page</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><br>
+            <h1>Registration Page</h1><br>
+            <form th:action="@{/post}" method="post" onsubmit="return show()">
+            
+                <label><b class="star">*</b>Name: </label>
+                <input class="form-control" type="text" name="name" id="name" placeholder="NAME" onkeypress="fun1(event)">
+                <br>
+
+                <label><b class="star">*</b>Email: </label>
+                <input class="form-control" type="text" name="email" id="email" placeholder="EMAIL">
+                <br>
+
+                <label><b class="star">*</b>Password: </label>
+                <input class="form-control" type="password" name="password" id="password" placeholder="PASSWORD" onfocus="disppwd()">
+                <br>
+
+                <button type="submit" class="btn btn-success">SUBMIT</button>
+                <br><br>
+                
+                
+                <div th:if="${errorMessage}" style="font-size:20px; text-align:center; color:red">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
+                <p style="font-size:20px; text-align:center">If you are already registered <a th:href="@{/login}">Login</a></p>
+            </form>
+        </div>
+
+        <div class="col-md-4"></div>
+    </div>
+</div>
+</body>
+</html>

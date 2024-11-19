@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Include Bootstrap -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .edit-btn, .back-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            background-color: #023f3c;
+        }
+
+        .back-btn {
+            background-color: #007bff;
+        }
+
+        .edit-btn:hover {
+            background-color: #1b8e89;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6"><br>
+                <h1 class="text-center">Student Details</h1><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Id</td>
+                            <td th:text="${studentData.id}"></td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td th:text="${studentData.name}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td th:text="${studentData.email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td th:text="${studentData.password}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                 <div class="button-container text-center">
+   					 <a class="edit-btn" th:href="@{/updateS/{id}(id=${studentData.id})}">Edit</a>
+   					  <a class="edit-btn" th:href="@{/login}">Login</a>
+				</div>
+				
+				<div th:if="${errorMessage}" style="font-size:20px; text-align:center; color:red">
+                   	 <span th:text="${errorMessage}"></span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
